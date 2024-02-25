@@ -13,7 +13,7 @@ import (
 
 const (
 	screenWidth  = 640
-	screenHeight = 640
+	screenHeight = 320
 	squareSize   = 64
 	numSquares   = screenWidth / squareSize
 )
@@ -69,20 +69,20 @@ func (g *Game) Update() error {
 func (g *Game) Draw(screen *ebiten.Image) {
 	for i := 0; i < numSquares; i++ {
 		x := float32(i * squareSize)
-		y := float32((screenHeight / 2) - squaresHeights[i])
+		y := float32(screenHeight - squaresHeights[i]) //float32((screenHeight / 2) - squaresHeights[i])
 		vector.DrawFilledRect(screen, x, y, squareSize, squaresHeights[i], squaresColor[i], false)
 	}
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 640, 640
+	return 640, 320
 }
 
 func main() {
 	squaresHeights = make([]float32, numSquares)
 	squaresColor = make([]color.RGBA, numSquares)
 	for i := 0; i < len(squaresHeights); i++ {
-		squaresHeights[i] = rand.Float32() * ((screenHeight / 2) - 1)
+		squaresHeights[i] = rand.Float32() * (screenHeight - 1)
 		squaresColor[i] = getRandomColor()
 	}
 
